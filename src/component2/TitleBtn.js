@@ -54,7 +54,7 @@ const TitleBtn = (props) => {
     } else if (boardIsFull()) {
       setWinner("Game has been drawn");
     }
-  }, [spaces]);
+  }, [spaces,squares]);
 
   const restart = () => {
     setWinner(null);
@@ -66,8 +66,6 @@ const TitleBtn = (props) => {
       square.style.pointerEvents = "auto";
     });
   };
-
-  console.log(spaces);
 
   return (
     <div className="titlebtn">
