@@ -8,7 +8,8 @@ html{
     
 }
 body{
-    background-color: rgb(20, 66, 67);
+/*     background-color: rgb(20, 66, 67); */
+        background-color: black;
     width: 100vw;
     height: 100vh;
     display: flex;
