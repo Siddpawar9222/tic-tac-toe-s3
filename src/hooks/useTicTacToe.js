@@ -9,7 +9,7 @@ import {
 import { checkWinner, isBoardFull, getAIMove } from '../utils/gameLogic';
 import { playSound } from '../utils/audio';
 
-export const useTicTacToe = () => {
+const useTicTacToe = () => {
   const [board, setBoard] = useState(INITIAL_BOARD);
   const [currentPlayer, setCurrentPlayer] = useState(PLAYERS.X);
   const [startingPlayer, setStartingPlayer] = useState(PLAYERS.X);
@@ -190,3 +190,6 @@ export const useTicTacToe = () => {
     toggleSound,
   };
 };
+
+export default useTicTacToe;
+

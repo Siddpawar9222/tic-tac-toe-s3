@@ -35,26 +35,20 @@ A modern, responsive, and accessible Tic-Tac-Toe web application built with Reac
 
 ```
 src/
-├── components/                 # Reusable, single-responsibility UI components
+├── components/                 # Material-UI modular components
 │   ├── GameBoard/              # 3x3 board container & individual SVG cells
 │   │   ├── GameBoard.js
-│   │   ├── GameCell.js
-│   │   └── GameBoard.css
+│   │   └── GameCell.js
 │   ├── GameControls/           # New Round, Reset Match & AI difficulty selector
-│   │   ├── GameControls.js
-│   │   └── GameControls.css
+│   │   └── GameControls.js
 │   ├── GameStatus/             # Turn status & animated result banner with "Play Again"
-│   │   ├── GameStatus.js
-│   │   └── GameStatus.css
+│   │   └── GameStatus.js
 │   ├── Header/                 # Title, mode toggle (PvP / AI), and audio control
-│   │   ├── Header.js
-│   │   └── Header.css
+│   │   └── Header.js
 │   ├── PlayerIndicator/        # Active player visual badge with pulsing turn marker
-│   │   ├── PlayerIndicator.js
-│   │   └── PlayerIndicator.css
+│   │   └── PlayerIndicator.js
 │   └── ScoreBoard/             # 3-column scorecard for X, Draws, and O
-│       ├── ScoreBoard.js
-│       └── ScoreBoard.css
+│       └── ScoreBoard.js
 │
 ├── constants/
 │   └── gameConstants.js        # Core constants (PLAYERS, WINNING_COMBINATIONS, MODES)
@@ -62,17 +56,19 @@ src/
 ├── hooks/
 │   └── useTicTacToe.js         # Custom hook managing state, turns, AI timing, and audio
 │
+├── theme/
+│   └── theme.js                # Material-UI dark theme, design tokens & Emotion keyframes
+│
 ├── styles/
-│   ├── variables.css           # Design tokens (colors, gradients, shadows, radius)
-│   └── global.css              # Global reset, typography, and accessibility styles
+│   ├── variables.css           # CSS variables & fallback tokens
+│   └── global.css              # Global resets and typography
 │
 ├── utils/
 │   ├── audio.js                # Web Audio API synthetic sound engine
 │   ├── gameLogic.js            # Pure logic: checkWinner, isBoardFull, minimax AI
 │   └── gameLogic.test.js       # Unit tests for game logic and minimax algorithm
 │
-├── App.js                      # Root application layout
-├── App.css                     # Container and glassmorphism styling
+├── App.js                      # Root application layout wrapped in ThemeProvider & CssBaseline
 ├── App.test.js                 # Integration tests for UI rendering and interactions
 ├── index.js                    # React 18 createRoot with StrictMode
 └── setupTests.js               # Jest-DOM matchers configuration
