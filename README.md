@@ -1,70 +1,149 @@
-# Getting Started with Create React App
+# Tic-Tac-Toe — Modern SaaS Edition
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive, and accessible Tic-Tac-Toe web application built with React, modular CSS architecture, and the Minimax algorithm for intelligent AI gameplay. Designed for portfolio presentation with clean component hierarchy, zero redundant state, and Web Audio API synthesis.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+- **🎮 Dual Game Modes**:
+  - **Local 2-Player (PvP)**: Play head-to-head on the same device.
+  - **vs AI (PvE)**: Challenge an intelligent computer player with **Casual** and **Master (Unbeatable Minimax)** difficulty settings.
+- **🎨 Modern SaaS UI/UX**:
+  - Glassmorphic dark theme with subtle neon accents for Player X (Cyan) and Player O (Coral).
+  - Fluid hover previews showing ghost placement on valid cells.
+  - Dynamic winning combination highlight with subtle glowing animations.
+  - Distinct active player turn indicators with turn heartbeat animations.
+- **📊 Real-Time Scoreboard**:
+  - Automatically records Player X wins, Player O / AI wins, and Draws.
+  - State persisted to browser `localStorage` across page reloads.
+- **🔊 Native Web Audio Synthesizer**:
+  - Custom audio effects for moves, wins, draws, and resets synthesized in real-time via the Web Audio API (0 external assets, 0 latency).
+  - Quick-access sound mute/unmute toggle.
+- **♿ First-Class Accessibility (a11y)**:
+  - Semantic HTML elements (`<header>`, `<main>`, `<section>`, `<button>`).
+  - Full keyboard navigation with visible focus rings (`Tab`, `Enter`, `Space`).
+  - Screen-reader friendly with dynamic `aria-label` attributes for each cell (`Row X, Column Y`) and `aria-live="polite"` match status announcements.
+  - Fully honors `prefers-reduced-motion`.
+- **📱 Ultra Responsive**:
+  - Perfect square aspect ratio on all viewports (Mobile, Tablet, Desktop).
+  - 44px+ touch-friendly hit areas for comfortable one-handed mobile play.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🏗️ Architecture & Project Structure
 
-### `npm test`
+```
+src/
+├── components/                 # Reusable, single-responsibility UI components
+│   ├── GameBoard/              # 3x3 board container & individual SVG cells
+│   │   ├── GameBoard.js
+│   │   ├── GameCell.js
+│   │   └── GameBoard.css
+│   ├── GameControls/           # New Round, Reset Match & AI difficulty selector
+│   │   ├── GameControls.js
+│   │   └── GameControls.css
+│   ├── GameStatus/             # Turn status & animated result banner with "Play Again"
+│   │   ├── GameStatus.js
+│   │   └── GameStatus.css
+│   ├── Header/                 # Title, mode toggle (PvP / AI), and audio control
+│   │   ├── Header.js
+│   │   └── Header.css
+│   ├── PlayerIndicator/        # Active player visual badge with pulsing turn marker
+│   │   ├── PlayerIndicator.js
+│   │   └── PlayerIndicator.css
+│   └── ScoreBoard/             # 3-column scorecard for X, Draws, and O
+│       ├── ScoreBoard.js
+│       └── ScoreBoard.css
+│
+├── constants/
+│   └── gameConstants.js        # Core constants (PLAYERS, WINNING_COMBINATIONS, MODES)
+│
+├── hooks/
+│   └── useTicTacToe.js         # Custom hook managing state, turns, AI timing, and audio
+│
+├── styles/
+│   ├── variables.css           # Design tokens (colors, gradients, shadows, radius)
+│   └── global.css              # Global reset, typography, and accessibility styles
+│
+├── utils/
+│   ├── audio.js                # Web Audio API synthetic sound engine
+│   ├── gameLogic.js            # Pure logic: checkWinner, isBoardFull, minimax AI
+│   └── gameLogic.test.js       # Unit tests for game logic and minimax algorithm
+│
+├── App.js                      # Root application layout
+├── App.css                     # Container and glassmorphism styling
+├── App.test.js                 # Integration tests for UI rendering and interactions
+├── index.js                    # React 18 createRoot with StrictMode
+└── setupTests.js               # Jest-DOM matchers configuration
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🧠 State Flow
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+┌──────────────────────────────────────────────┐
+│                  App.js                      │
+└──────────────────────┬───────────────────────┘
+                       │ consumes
+┌──────────────────────▼───────────────────────┐
+│               useTicTacToe()                 │
+│  State: board, currentPlayer, scores, mode   │
+│  Derived: winner, winningCombo, isDraw, etc. │
+└──────────────┬───────────────────────────────┘
+               │ delegates pure calculations
+┌──────────────▼───────────────────────────────┐
+│           utils/gameLogic.js                 │
+│  - checkWinner(board)                        │
+│  - isBoardFull(board)                        │
+│  - getAIMove(board, player, difficulty)      │
+└──────────────────────────────────────────────┘
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Getting Started
 
-### `npm run eject`
+### Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Node.js (v16+ or v18+)
+- npm (v8+)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+git clone https://github.com/your-username/tic-tac-toe-s3.git
+cd tic-tac-toe-s3
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Development Server
 
-## Learn More
+Run the development server on `http://localhost:3000`:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Running Tests
 
-### Code Splitting
+Execute the unit and integration test suite:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm test -- --watchAll=false
+```
 
-### Analyzing the Bundle Size
+### Production Build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Create an optimized, minified production bundle in the `build/` directory:
 
-### Making a Progressive Web App
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🚢 Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) configured to automatically build and sync the `build/` folder to an Amazon S3 bucket and invalidate the CloudFront CDN cache upon pushing to the `master` branch.

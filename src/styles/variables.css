@@ -1,0 +1,54 @@
+:root {
+  --bg-app: #090d16;
+  --bg-card: #111827;
+  --bg-card-hover: #172136;
+  --bg-elevated: #1e293b;
+  --bg-cell: #131b2e;
+  --bg-cell-hover: #1a253e;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-focus: #6366f1;
+
+  --player-x: #06b6d4;
+  --player-x-light: #67e8f9;
+  --player-x-glow: rgba(6, 182, 212, 0.35);
+  --player-x-bg: rgba(6, 182, 212, 0.08);
+  --player-x-border: rgba(6, 182, 212, 0.3);
+
+  --player-o: #f43f5e;
+  --player-o-light: #fda4af;
+  --player-o-glow: rgba(244, 63, 94, 0.35);
+  --player-o-bg: rgba(244, 63, 94, 0.08);
+  --player-o-border: rgba(244, 63, 94, 0.3);
+
+  --draw-color: #eab308;
+  --draw-glow: rgba(234, 179, 8, 0.3);
+  --draw-bg: rgba(234, 179, 8, 0.08);
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  --shadow-glow-x: 0 0 20px rgba(6, 182, 212, 0.25);
+  --shadow-glow-o: 0 0 20px rgba(244, 63, 94, 0.25);
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
