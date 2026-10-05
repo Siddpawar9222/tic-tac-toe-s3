@@ -1,9 +1,13 @@
-name: Deploy to S3
+name: Deploy to S3 + CloudFront
 
 on:
   push:
-    branches:
-      - master  # or your deployment branch
+    branches: [master]
+
+# Required for OIDC token minting
+permissions:
+  id-token: write   # ← this is the key permission
+  contents: read
 
 jobs:
   deploy:
@@ -11,36 +15,31 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          node-version: '18'
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          # No access key / secret key needed!
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies & build
+        run: |
+          npm ci
+          npm run build
 
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          SOURCE_DIR: ./build  # Vite or CRA
+      - name: Sync build to S3
+        run: |
+          aws s3 sync ./build s3://${{ secrets.S3_BUCKET }} \
+            --delete \
+            --cache-control "public,max-age=31536000,immutable"
+        
+          aws s3 cp ./build/index.html s3://${{ secrets.S3_BUCKET }}/index.html \
+            --cache-control "no-cache,no-store,must-revalidate"
 
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id ${{ secrets.CF_DISTRIBUTION_ID }} \
             --paths "/*"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
